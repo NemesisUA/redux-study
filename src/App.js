@@ -1,5 +1,6 @@
 import './App.css';
 import { useDispatch, useSelector } from 'react-redux';
+import { addCustomerAction, deleteCustomerAction } from './store/customerReducer';
 
 function App() {
   const dispatch = useDispatch();
@@ -26,17 +27,11 @@ function App() {
       id: Date.now()
     };
 
-    dispatch({
-      type: 'ADD_CUSTOMER',
-      payload: customer
-    })
+    dispatch(addCustomerAction(customer))
   }
 
   const deleteCustomer = (customer) => {
-    dispatch({
-      type: 'DELETE_CUSTOMER',
-      payload: customer.id
-    })
+    dispatch(deleteCustomerAction(customer.id))
   }
 
   return (
