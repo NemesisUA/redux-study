@@ -4,11 +4,11 @@ const initialState = {
 
 export const customerReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'ADD_CASH': 
-      return {...state, cash: state.cash + action.payload}
+    case 'ADD_CUSTOMER': 
+      return {...state, customers: [...state.customers, action.payload]}
 
-    case 'GET_CASH':
-      return {...state, cash: state.cash - action.payload}
+    case 'DELETE_CUSTOMER':
+      return {...state, customers: state.customers.filter(customer => customer.id !== action.payload)}
 
     default: return state
   }

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 function App() {
   const dispatch = useDispatch();
   const cash = useSelector(state => state.cash.cash);
+  const customers = useSelector(state => state.customers.customers);
 
   const addCash = (value) => {
     dispatch({
@@ -19,9 +20,28 @@ function App() {
     })
   }
 
+  const addCustomer = (name) => {
+    const customer = {
+      name: name,
+      id: Date.now()
+    };
+
+    dispatch({
+      type: 'ADD_CUSTOMER',
+      payload: customer
+    })
+  }
+
+  const deleteCustomer = (customer) => {
+    dispatch({
+      type: 'DELETE_CUSTOMER',
+      payload: customer.id
+    })
+  }
+
   return (
     <div className="App">
-      <div className='cash-value'>{cash}</div>
+      <div className='cash-value'>Balance: ${cash}</div>
 
       <button onClick={() => addCash(Number(prompt('Add, $', '')))} >
         Add Cash
@@ -30,6 +50,26 @@ function App() {
       <button onClick={() => getCash(Number(prompt('Get, $', '')))} >
         Remove Cash
       </button>
+
+      <br />
+
+      <button onClick={() => addCustomer(prompt('Enter Customer Name:', ''))} >
+        Add Customer
+      </button>
+
+      <div>
+        {customers.length > 0 ? 
+        <ul>
+          {customers.map(customer => 
+            <li onClick={() => deleteCustomer(customer)} className='customer-styles'>
+              {customer.name}
+            </li>
+          )}
+        </ul>
+        : 
+        <div style={{fontSize: "2rem"}}>There are no customers!</div>
+        }
+      </div>
       
     </div>
   );
